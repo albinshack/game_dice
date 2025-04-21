@@ -15,6 +15,8 @@ app.use(express.static('public'));
 let players = {};
 
 socket.on('join-game', ({ name, avatar }) => {
+    console.log(`New player: ${name}, Avatar: ${avatar}`);
+
     if (Object.keys(players).length < 2) {
         players[socket.id] = {
             name: name || 'Player',
@@ -28,6 +30,7 @@ socket.on('join-game', ({ name, avatar }) => {
         socket.emit('room-full');
     }
 });
+
 
     socket.on('roll-dice', () => {
         const player = players[socket.id];
