@@ -14,16 +14,20 @@ app.use(express.static('public'));
 
 let players = {};
 
-io.on('connection', (socket) => {
-    socket.on('join-game', (name) => {
-        if (Object.keys(players).length < 2) {
-            players[socket.id] = { name, score: 0, rolls: 0 };
-            io.to(socket.id).emit('player-assigned', socket.id);
-            io.emit('update-scores', players);
-        } else {
-            socket.emit('room-full');
-        }
-    });
+socket.on('join-game', ({ name, avatar }) => {
+    if (Object.keys(players).length < 2) {
+        players[socket.id] = {
+            name: name || 'Player',
+            avatar: avatar || 'default-avatar.png',
+            score: 0,
+            rolls: 0
+        };
+        io.to(socket.id).emit('player-assigned', socket.id);
+        io.emit('update-scores', players);
+    } else {
+        socket.emit('room-full');
+    }
+});
 
     socket.on('roll-dice', () => {
         const player = players[socket.id];
