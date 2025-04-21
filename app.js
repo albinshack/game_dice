@@ -1,4 +1,4 @@
-﻿const socket = io('https://game-dice.onrender.com');
+const socket = io('https://game-dice.onrender.com');
 let playerId = null;
 let playerName = '';
 let currentPlayers = {};
