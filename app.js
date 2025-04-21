@@ -6,7 +6,6 @@ let currentPlayers = {};
 function joinGame() {
     playerName = document.getElementById('player-name').value.trim();
     const avatar = document.getElementById('avatar-select').value;
-    console.log("Joining game as:", playerName);  // Debugging line
 
     if (playerName) {
         socket.emit('join-game', { name: playerName, avatar });
