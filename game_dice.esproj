@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.2191419">
+  <ItemGroup>
+    <Folder Include="public\images\" />
+    <Folder Include="public\sounds\" />
+  </ItemGroup>
+</Project>
