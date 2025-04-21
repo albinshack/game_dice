@@ -4,14 +4,14 @@ let playerName = '';
 let currentPlayers = {};
 
 function joinGame() {
-    playerName = document.getElementById('player-name').value.trim();
-    const avatar = document.getElementById('avatar-select').value;
+    const nameInput = document.getElementById('player-name').value.trim();
+    const avatarInput = document.getElementById('player-avatar').value;
 
-    if (playerName) {
-        socket.emit('join-game', { name: playerName, avatar });
+    if (nameInput) {
+        console.log("Joining game as:", nameInput, "with avatar:", avatarInput); // Debug
+        socket.emit('join-game', { name: nameInput, avatar: avatarInput });
     }
 }
-
 function rollDice() {
     socket.emit('roll-dice');
 }
