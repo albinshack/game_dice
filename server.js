@@ -1,15 +1,26 @@
 const express = require('express');
 const http = require('http');
+const cors = require('cors');
 const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+
+// CORS middleware for Express
+app.use(cors({
+    origin: 'https://albinshack.github.io',  // ✅ Your GitHub Pages URL
+    methods: ['GET', 'POST']
+}));
+
+// CORS setup for Socket.IO
 const io = socketIo(server, {
     cors: {
-        origin: '*',
+        origin: 'https://albinshack.github.io',  // ✅ Same here
+        methods: ['GET', 'POST']
     }
 });
 
+// Serve static files from /public (if needed)
 app.use(express.static('public'));
 
 let players = {};
