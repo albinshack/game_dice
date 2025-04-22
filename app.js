@@ -14,7 +14,7 @@ function joinGame() {
 }
 function rollDice() {
      // Play the dice roll sound
-    const diceSound = new Audio('sounds/dice-roll.mp3');
+    const diceSound = new Audio('sounds/roll.mp3');
     diceSound.play();
     socket.emit('roll-dice');
 }
