@@ -53,6 +53,7 @@ io.on('connection', (socket) => {
             player.rolls++;
             player.lastRoll = roll;
             players[socket.id] = player;
+            io.emit('dice-rolled', { playerId: socket.id, roll });
             io.emit('update-scores', players);
 
             const allDone = Object.values(players).every(p => p.rolls >= 5);
