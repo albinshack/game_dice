@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 
@@ -14,23 +14,25 @@ app.use(express.static('public'));
 
 let players = {};
 
-socket.on('join-game', ({ name, avatar }) => {
-    console.log(`New player: ${name}, Avatar: ${avatar}`);
+io.on('connection', (socket) => {
+    console.log(`Player connected: ${socket.id}`);
 
-    if (Object.keys(players).length < 2) {
-        players[socket.id] = {
-            name: name || 'Player',
-            avatar: avatar || 'default-avatar.png',
-            score: 0,
-            rolls: 0
-        };
-        io.to(socket.id).emit('player-assigned', socket.id);
-        io.emit('update-scores', players);
-    } else {
-        socket.emit('room-full');
-    }
-});
+    socket.on('join-game', ({ name, avatar }) => {
+        console.log(`New player: ${name}, Avatar: ${avatar}`);
 
+        if (Object.keys(players).length < 2) {
+            players[socket.id] = {
+                name: name || 'Player',
+                avatar: avatar || 'default-avatar.png',
+                score: 0,
+                rolls: 0
+            };
+            io.to(socket.id).emit('player-assigned', socket.id);
+            io.emit('update-scores', players);
+        } else {
+            socket.emit('room-full');
+        }
+    });
 
     socket.on('roll-dice', () => {
         const player = players[socket.id];
@@ -55,6 +57,7 @@ socket.on('join-game', ({ name, avatar }) => {
     });
 
     socket.on('disconnect', () => {
+        console.log(`Player disconnected: ${socket.id}`);
         delete players[socket.id];
         io.emit('update-scores', players);
     });
