@@ -16,7 +16,6 @@ function rollDice() {
      // Play the dice roll sound
     const diceSound = new Audio('sounds/roll.mp3');
     diceSound.play();
-    console.log("sound play debugg");
     socket.emit('roll-dice');
 }
 
